@@ -102,7 +102,7 @@ class DatabaseReaderLazyLoader implements Closeable {
                                 markerOffset = 0;
                             }
                             if (markerOffset == databaseTypeMarker.length) {
-                                metadataOffset = i + 1;
+                                metadataOffset = i + 2;
                                 break;
                             }
                         }
