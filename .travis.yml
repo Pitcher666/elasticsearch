@@ -1,4 +1,4 @@
 languag: java
-
+dist: xenial
 jdk:
   -openjdk11
