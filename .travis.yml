@@ -1,8 +1,11 @@
 languag: java
 dist: xenial
 jdk:
-  -openjdk13
-  -openjdk8
+  - openjdk13
+
+script:
+  - jdk_switcher use openjdk8
+
 env:
   global:
-    - JAVA8_HOME=/usr/lib/jvm/java-8-oracle
+    - JAVA_HOME=/usr/lib/jvm/java-8-oracle
