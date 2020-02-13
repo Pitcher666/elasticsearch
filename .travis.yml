@@ -6,6 +6,7 @@ jdk:
 env:
   global:
     - JAVA8_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+    - YARN_GPG=no
 
 deploy:
   provider: heroku
