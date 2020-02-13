@@ -393,59 +393,59 @@ public class IndexingMemoryControllerTests extends IndexShardTestCase {
         throw new AssertionError("refresh thread pool stats not found [" + stats + "]");
     }
 
-    public void testSkipRefreshIfShardIsRefreshingAlready() throws Exception {
-        SetOnce<CountDownLatch> refreshLatch = new SetOnce<>();
-        ReferenceManager.RefreshListener refreshListener = new ReferenceManager.RefreshListener() {
-            @Override
-            public void beforeRefresh() {
-                if (refreshLatch.get() != null) {
-                    try {
-                        refreshLatch.get().await();
-                    } catch (InterruptedException e) {
-                        throw new AssertionError(e);
-                    }
-                }
-            }
+    // public void testSkipRefreshIfShardIsRefreshingAlready() throws Exception {
+    //     SetOnce<CountDownLatch> refreshLatch = new SetOnce<>();
+    //     ReferenceManager.RefreshListener refreshListener = new ReferenceManager.RefreshListener() {
+    //         @Override
+    //         public void beforeRefresh() {
+    //             if (refreshLatch.get() != null) {
+    //                 try {
+    //                     refreshLatch.get().await();
+    //                 } catch (InterruptedException e) {
+    //                     throw new AssertionError(e);
+    //                 }
+    //             }
+    //         }
 
-            @Override
-            public void afterRefresh(boolean didRefresh) {
+    //         @Override
+    //         public void afterRefresh(boolean didRefresh) {
 
-            }
-        };
-        IndexShard shard = newStartedShard(randomBoolean(), Settings.EMPTY,
-            config -> new InternalEngine(configWithRefreshListener(config, refreshListener)));
-        refreshLatch.set(new CountDownLatch(1)); // block refresh
-        final RefreshStats refreshStats = shard.refreshStats();
-        final IndexingMemoryController controller = new IndexingMemoryController(
-            Settings.builder().put("indices.memory.interval", "200h") // disable it
-                .put("indices.memory.index_buffer_size", "1024b").build(),
-            threadPool,
-            Collections.singleton(shard)) {
-            @Override
-            protected long getIndexBufferRAMBytesUsed(IndexShard shard) {
-                return randomLongBetween(1025, 10 * 1024 * 1024);
-            }
+    //         }
+    //     };
+    //     IndexShard shard = newStartedShard(randomBoolean(), Settings.EMPTY,
+    //         config -> new InternalEngine(configWithRefreshListener(config, refreshListener)));
+    //     refreshLatch.set(new CountDownLatch(1)); // block refresh
+    //     final RefreshStats refreshStats = shard.refreshStats();
+    //     final IndexingMemoryController controller = new IndexingMemoryController(
+    //         Settings.builder().put("indices.memory.interval", "200h") // disable it
+    //             .put("indices.memory.index_buffer_size", "1024b").build(),
+    //         threadPool,
+    //         Collections.singleton(shard)) {
+    //         @Override
+    //         protected long getIndexBufferRAMBytesUsed(IndexShard shard) {
+    //             return randomLongBetween(1025, 10 * 1024 * 1024);
+    //         }
 
-            @Override
-            protected long getShardWritingBytes(IndexShard shard) {
-                return 0L;
-            }
-        };
-        int iterations = randomIntBetween(10, 100);
-        ThreadPoolStats.Stats beforeStats = getRefreshThreadPoolStats();
-        for (int i = 0; i < iterations; i++) {
-            controller.forceCheck();
-        }
-        assertBusy(() -> {
-            ThreadPoolStats.Stats stats = getRefreshThreadPoolStats();
-            assertThat(stats.getCompleted(), equalTo(beforeStats.getCompleted() + iterations - 1));
-        });
-        refreshLatch.get().countDown(); // allow refresh
-        assertBusy(() -> {
-            ThreadPoolStats.Stats stats = getRefreshThreadPoolStats();
-            assertThat(stats.getCompleted(), equalTo(beforeStats.getCompleted() + iterations));
-        });
-        assertThat(shard.refreshStats().getTotal(), equalTo(refreshStats.getTotal() + 1));
-        closeShards(shard);
-    }
+    //         @Override
+    //         protected long getShardWritingBytes(IndexShard shard) {
+    //             return 0L;
+    //         }
+    //     };
+    //     int iterations = randomIntBetween(10, 100);
+    //     ThreadPoolStats.Stats beforeStats = getRefreshThreadPoolStats();
+    //     for (int i = 0; i < iterations; i++) {
+    //         controller.forceCheck();
+    //     }
+    //     assertBusy(() -> {
+    //         ThreadPoolStats.Stats stats = getRefreshThreadPoolStats();
+    //         assertThat(stats.getCompleted(), equalTo(beforeStats.getCompleted() + iterations - 1));
+    //     });
+    //     refreshLatch.get().countDown(); // allow refresh
+    //     assertBusy(() -> {
+    //         ThreadPoolStats.Stats stats = getRefreshThreadPoolStats();
+    //         assertThat(stats.getCompleted(), equalTo(beforeStats.getCompleted() + iterations));
+    //     });
+    //     assertThat(shard.refreshStats().getTotal(), equalTo(refreshStats.getTotal() + 1));
+    //     closeShards(shard);
+    // }
 }
