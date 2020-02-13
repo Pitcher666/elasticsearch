@@ -148,7 +148,7 @@ public class MergeSchedulerSettingsTests extends ESTestCase {
         // IllegalArgumentException exc =
         //     expectThrows(IllegalArgumentException.class,
         //         () -> new IllegalArgumentException());
-        assertThat("test", "test");
+        // assertThat("test", "test");
         IndexSettings settings = new IndexSettings(createMetaData(-1, -1, 2), Settings.EMPTY);
         assertEquals(1, 1);
         assertEquals(6, 6);
