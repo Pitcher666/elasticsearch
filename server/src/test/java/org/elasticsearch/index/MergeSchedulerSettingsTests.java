@@ -35,7 +35,6 @@ import static org.elasticsearch.common.util.concurrent.EsExecutors.NODE_PROCESSO
 import static org.elasticsearch.index.IndexSettingsTests.newIndexMeta;
 import static org.elasticsearch.index.MergeSchedulerConfig.MAX_MERGE_COUNT_SETTING;
 import static org.elasticsearch.index.MergeSchedulerConfig.MAX_THREAD_COUNT_SETTING;
-import static org.hamcrest.core.StringContains.containsString;
 
 public class MergeSchedulerSettingsTests extends ESTestCase {
     private static class MockAppender extends AbstractAppender {
