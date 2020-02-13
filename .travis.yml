@@ -3,9 +3,6 @@ dist: xenial
 jdk:
   - openjdk13
 
-script:
-  - jdk_switcher use openjdk8
-
 env:
   global:
     - JAVA8_HOME=/usr/lib/jvm/java-8-openjdk-amd64
