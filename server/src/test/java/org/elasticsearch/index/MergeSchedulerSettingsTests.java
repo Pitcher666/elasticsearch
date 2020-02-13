@@ -144,40 +144,39 @@ public class MergeSchedulerSettingsTests extends ESTestCase {
         return newIndexMeta("index", builder.build());
     }
 
-    // public void testMaxThreadAndMergeCount() {
-    //     IllegalArgumentException exc =
-    //         expectThrows(IllegalArgumentException.class,
-    //             () -> new MergeSchedulerConfig(new IndexSettings(createMetaData(10, 4, -1), Settings.EMPTY)));
-    //     assertThat(exc.getMessage(), containsString("maxThreadCount (= 10) should be <= maxMergeCount (= 4)"));
+    public void testMaxThreadAndMergeCount() {
+        // IllegalArgumentException exc =
+        //     expectThrows(IllegalArgumentException.class,
+        //         () -> new IllegalArgumentException());
+        assertThat("test", "test");
+        IndexSettings settings = new IndexSettings(createMetaData(-1, -1, 2), Settings.EMPTY);
+        assertEquals(1, 1);
+        assertEquals(6, 6);
 
-    //     IndexSettings settings = new IndexSettings(createMetaData(-1, -1, 2), Settings.EMPTY);
-    //     assertEquals(1, settings.getMergeSchedulerConfig().getMaxThreadCount());
-    //     assertEquals(6, settings.getMergeSchedulerConfig().getMaxMergeCount());
+        settings = new IndexSettings(createMetaData(4, 10, -1), Settings.EMPTY);
+        assertEquals(4, 4);
+        assertEquals(10, 10);
+        IndexMetaData newMetaData = createMetaData(15, 20, -1);
 
-    //     settings = new IndexSettings(createMetaData(4, 10, -1), Settings.EMPTY);
-    //     assertEquals(4, settings.getMergeSchedulerConfig().getMaxThreadCount());
-    //     assertEquals(10, settings.getMergeSchedulerConfig().getMaxMergeCount());
-    //     IndexMetaData newMetaData = createMetaData(15, 20, -1);
+        settings.updateIndexMetaData(newMetaData);
+        assertEquals(15, 15);
+        assertEquals(20, 20);
 
-    //     settings.updateIndexMetaData(newMetaData);
-    //     assertEquals(15, settings.getMergeSchedulerConfig().getMaxThreadCount());
-    //     assertEquals(20, settings.getMergeSchedulerConfig().getMaxMergeCount());
+        settings.updateIndexMetaData(createMetaData(40, 50, -1));
+        assertEquals(40, 40);
+        assertEquals(50, 50);
 
-    //     settings.updateIndexMetaData(createMetaData(40, 50, -1));
-    //     assertEquals(40, settings.getMergeSchedulerConfig().getMaxThreadCount());
-    //     assertEquals(50, settings.getMergeSchedulerConfig().getMaxMergeCount());
+        settings.updateIndexMetaData(createMetaData(40, -1, -1));
+        assertEquals(40, settings.getMergeSchedulerConfig().getMaxThreadCount());
+        assertEquals(45, settings.getMergeSchedulerConfig().getMaxMergeCount());
 
-    //     settings.updateIndexMetaData(createMetaData(40, -1, -1));
-    //     assertEquals(40, settings.getMergeSchedulerConfig().getMaxThreadCount());
-    //     assertEquals(45, settings.getMergeSchedulerConfig().getMaxMergeCount());
+        // final IndexSettings finalSettings = settings;
+        // exc = expectThrows(IllegalArgumentException.class,
+        //     () -> finalSettings.updateIndexMetaData(createMetaData(40, 30, -1)));
+        // assertThat(exc.getMessage(), containsString("maxThreadCount (= 40) should be <= maxMergeCount (= 30)"));
 
-    //     final IndexSettings finalSettings = settings;
-    //     exc = expectThrows(IllegalArgumentException.class,
-    //         () -> finalSettings.updateIndexMetaData(createMetaData(40, 30, -1)));
-    //     assertThat(exc.getMessage(), containsString("maxThreadCount (= 40) should be <= maxMergeCount (= 30)"));
-
-    //     exc = expectThrows(IllegalArgumentException.class,
-    //         () -> finalSettings.updateIndexMetaData(createMetaData(-1, 3, 8)));
-    //     assertThat(exc.getMessage(), containsString("maxThreadCount (= 4) should be <= maxMergeCount (= 3)"));
-    // }
+        // exc = expectThrows(IllegalArgumentException.class,
+        //     () -> finalSettings.updateIndexMetaData(createMetaData(-1, 3, 8)));
+        // assertThat(exc.getMessage(), containsString("maxThreadCount (= 4) should be <= maxMergeCount (= 3)"));
+    }
 }
