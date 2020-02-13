@@ -8,4 +8,4 @@ script:
 
 env:
   global:
-    - JAVA_HOME=/usr/lib/jvm/java-8-oracle
+    - JAVA8_HOME=/usr/lib/jvm/java-8-openjdk-amd64
