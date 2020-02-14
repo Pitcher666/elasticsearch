@@ -1,5 +1,5 @@
 languag: java
-dist: xenial
+os: windows
 jdk:
   - openjdk13
 
