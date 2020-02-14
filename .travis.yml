@@ -2,8 +2,8 @@ languag: java
 os: linux
 jdk:
   - openjdk13
-  - YARN_GPG=no
 
 env:
   global:
     - JAVA8_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+    - YARN_GPG=no
