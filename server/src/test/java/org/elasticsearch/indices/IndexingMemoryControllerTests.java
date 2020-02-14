@@ -178,6 +178,7 @@ public class IndexingMemoryControllerTests extends IndexShardTestCase {
         controller.assertBuffer(shard1, 1);
 
         // remove first shard
+        // remove first shard
         controller.deleteShard(shard0);
         controller.forceCheck();
         controller.assertBuffer(shard1, 1);
