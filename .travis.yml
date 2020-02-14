@@ -2,6 +2,7 @@ languag: java
 os: linux
 jdk:
   - openjdk13
+  - YARN_GPG=no
 
 env:
   global:
