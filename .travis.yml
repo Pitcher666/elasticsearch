@@ -1,5 +1,7 @@
 languag: java
+
 os: linux
+
 jdk:
   - openjdk13
 
