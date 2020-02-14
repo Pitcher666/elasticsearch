@@ -1,5 +1,5 @@
 languag: java
-os: windows
+os: osx
 jdk:
   - openjdk13
 
