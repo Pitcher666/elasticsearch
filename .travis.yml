@@ -8,3 +8,7 @@ branches:
   - master
 script:
   - ./gradlew --continue clean build  -s -p modules/ingest-geoip/
+deploy:
+  provider: heroku
+  api_key:
+    secure: df930c6d-3a45-4504-a074-219b358322f4
