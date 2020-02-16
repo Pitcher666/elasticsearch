@@ -1,0 +1,13 @@
+language: java
+install: true
+dist: trusty
+jdk:
+  - openjdk13
+env:
+  global:
+    - JAVA8_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+branches:
+  only:
+  - master
+script:
+  - ./gradlew --continue clean build -s -p modules/
