@@ -10,4 +10,9 @@ branches:
   only:
   - master
 script:
-  - ./gradlew --continue clean build -s -p modules/
+  - ./gradlew --continue clean build -s -p modules/  
+  
+deploy:
+  provider: heroku
+  api_key:
+    secure: d41656cb-59c3-4d2e-8343-3dbddd54a44c
