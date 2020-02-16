@@ -7,4 +7,4 @@ branches:
   only:
   - master
 script:
-  - ./gradlew --continue clean build -s -p modules/transport-netty4/
+  - ./gradlew --continue clean build  -s -p modules/transport-netty4/ modules/ingest-geoip/
