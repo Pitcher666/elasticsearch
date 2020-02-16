@@ -1,11 +1,22 @@
-languag: java
+language: java
+install: true
 
-os: linux
 
+dist: trusty
 jdk:
   - openjdk13
+  - openjdk-ea
 
-env:
-  global:
-    - JAVA8_HOME=/usr/lib/jvm/java-8-openjdk-amd64
-    - YARN_GPG=no
+
+matrix:
+  allow_failures:
+    - jdk: openjdk-ea
+
+branches:
+  only:
+  - master
+  - v7.6.0
+    
+
+script:
+  - ./gradlew --continue clean build --scan -s -p modules/
