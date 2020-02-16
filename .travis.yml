@@ -7,4 +7,4 @@ branches:
   only:
   - master
 script:
-  - ./gradlew --continue clean build  -s -p modules/
+  - ./gradlew --continue --warning-mode all clean build  -s -p modules/
